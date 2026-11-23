@@ -24,12 +24,19 @@ export default function Fog({ eng }) {
     }
     size(); addEventListener('resize', size)
     let id
+    let lastRender = 0
     const loop = (now) => {
+      id = requestAnimationFrame(loop)
+      // Only render shader if within hero view
+      if (window.scrollY > window.innerHeight * 1.5) return
+      // Cap WebGL render loop to ~40fps to eliminate frame drops & CPU lag
+      if (now - lastRender < 25) return
+      lastRender = now
+
       const S = eng.current
       gl.uniform2f(U.R, cv.width, cv.height); gl.uniform1f(U.T, now / 1000)
       gl.uniform1f(U.S, S.s); gl.uniform1f(U.K, S.k)
       gl.drawArrays(gl.TRIANGLES, 0, 3)
-      id = requestAnimationFrame(loop)
     }
     id = requestAnimationFrame(loop)
     return () => { cancelAnimationFrame(id); removeEventListener('resize', size) }

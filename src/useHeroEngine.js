@@ -20,22 +20,28 @@ export default function useHeroEngine() {
     S.begin = begin
 
     const frame = (now) => {
+      id = requestAnimationFrame(frame)
       S.clock = now
       const scrollY = window.scrollY
-      const trackHeight = window.innerHeight * 0.9
+      const trackHeight = window.innerHeight * 0.85
 
       if (!S.animating) {
-        // Continuous, buttery-smooth scroll-driven progress (0.0 to 1.0)
+        // Continuous scroll-driven progress (0.0 to 1.0)
         const scrollK = clamp(scrollY / Math.max(1, trackHeight))
-        // Smooth dampening
-        S.k += (scrollK - S.k) * 0.1
-        // Smoothly activate headlights and night layer when k > 0.45
-        if (S.k > 0.45 && !shown) setShown(1)
-        else if (S.k <= 0.45 && shown) setShown(0)
-        
-        // Gentle fog level matching transition
-        S.s = Math.sin(S.k * Math.PI) * 0.45
-        setWant(S.k > 0.5 ? 1 : 0)
+        // Linear direct responsiveness (no continuous re-rendering lag)
+        if (Math.abs(scrollK - S.k) > 0.005) {
+          S.k = scrollK
+          // Smoothly activate headlights and night layer when k > 0.45
+          if (S.k > 0.45 && !shown) setShown(1)
+          else if (S.k <= 0.45 && shown) setShown(0)
+          
+          S.s = Math.sin(S.k * Math.PI) * 0.35
+          setWant(S.k > 0.5 ? 1 : 0)
+
+          store.k = S.k
+          root.setProperty('--k', S.k.toFixed(3))
+          root.setProperty('--k2', S.k.toFixed(3))
+        }
       } else {
         const d = now - S.start
         let y = 0, s = 0, dip = 0, k2 = S.k
@@ -56,12 +62,10 @@ export default function useHeroEngine() {
         S.s = s
         root.setProperty('--sink', (y * innerHeight).toFixed(1) + 'px')
         root.setProperty('--dip', dip.toFixed(3))
+        store.k = S.k
+        root.setProperty('--k', S.k.toFixed(3))
+        root.setProperty('--k2', S.k.toFixed(3))
       }
-
-      store.k = S.k
-      root.setProperty('--k', S.k.toFixed(3))
-      root.setProperty('--k2', S.k.toFixed(3))
-      id = requestAnimationFrame(frame)
     }
 
     id = requestAnimationFrame(frame)

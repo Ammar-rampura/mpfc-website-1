@@ -474,59 +474,41 @@ h1 .y {
 .dust-particle {
   position: absolute;
   border-radius: 50%;
-  filter: blur(30px);
-  opacity: calc(0.25 + (1 - var(--k)) * 0.2);
-  transition: opacity 0.8s ease
+  filter: blur(40px);
+  opacity: 0.18;
+  transform: translateZ(0);
 }
 
 .dp-1 {
-  width: 360px;
-  height: 360px;
-  background: color-mix(in srgb, rgba(100, 140, 255, .15) calc(var(--k)*100%), rgba(255, 160, 80, .25));
+  width: 320px;
+  height: 320px;
+  background: rgba(100, 140, 255, .15);
   left: 10%;
   top: 20%;
-  animation: ambientFloat 22s ease-in-out infinite alternate
 }
 
 .dp-2 {
-  width: 450px;
-  height: 450px;
-  background: color-mix(in srgb, rgba(140, 110, 255, .12) calc(var(--k)*100%), rgba(255, 110, 70, .22));
+  width: 380px;
+  height: 380px;
+  background: rgba(255, 110, 70, .15);
   right: 5%;
   top: 50%;
-  animation: ambientFloat 28s ease-in-out infinite alternate-reverse
 }
 
 .dp-3 {
-  width: 300px;
-  height: 300px;
-  background: color-mix(in srgb, rgba(60, 180, 255, .12) calc(var(--k)*100%), rgba(255, 210, 120, .24));
+  width: 260px;
+  height: 260px;
+  background: rgba(255, 210, 120, .15);
   left: 40%;
   bottom: 10%;
-  animation: ambientFloat 25s ease-in-out infinite alternate
 }
 
 .dp-4 {
-  width: 400px;
-  height: 400px;
-  background: color-mix(in srgb, rgba(120, 150, 220, .14) calc(var(--k)*100%), rgba(255, 140, 90, .2));
+  width: 340px;
+  height: 340px;
+  background: rgba(120, 150, 220, .15);
   right: 25%;
   top: 15%;
-  animation: ambientFloat 32s ease-in-out infinite alternate-reverse
-}
-
-@keyframes ambientFloat {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1)
-  }
-
-  50% {
-    transform: translate3d(40px, -50px, 0) scale(1.15)
-  }
-
-  100% {
-    transform: translate3d(-50px, 35px, 0) scale(0.95)
-  }
 }
 
 .clouds {
@@ -2082,255 +2064,393 @@ h2 {
 
 /* Comprehensive Mobile Responsiveness & Polish */
 @media (max-width: 820px) {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
   .hero-pinned-track {
     height: 100svh;
   }
+
   .hero {
     position: relative;
     top: auto;
-    min-height: 540px;
+    min-height: 520px;
     height: 100svh;
   }
+
+  .fog {
+    display: none;
+  }
+
+  .sk, #skyM, #skyN {
+    filter: none !important;
+  }
+
   .bar {
-    padding: 16px 20px 0;
+    padding: 14px 16px 0;
   }
+
   .brand-logo-img {
-    height: 38px;
+    height: 36px;
   }
+
   .links,
   .side > a:first-child {
     display: none;
   }
+
   .side {
-    gap: 12px;
+    gap: 8px;
   }
+
   .cta {
-    height: 40px;
-    padding: 0 16px;
-    font-size: 13.5px;
+    height: 38px;
+    padding: 0 14px;
+    font-size: 13px;
   }
+
   h1 {
-    margin-top: 24px;
+    margin-top: 20px;
     padding: 0 16px;
-    font-size: clamp(28px, 8.5vw, 42px);
+    font-size: clamp(26px, 8vw, 38px);
     line-height: 1.15;
   }
+
   .dock {
-    padding: 0 16px 20px;
+    padding: 0 16px 16px;
   }
+
   .toggle {
     width: 100%;
-    max-width: 380px;
-    height: 68px;
+    max-width: 340px;
+    height: 64px;
   }
+
   .toggle b {
-    font-size: 17px;
+    font-size: 16px;
   }
+
   .toggle small {
-    font-size: 11.5px;
+    font-size: 11px;
   }
+
   .cap {
-    font-size: 13px;
+    font-size: 12.5px;
     padding: 0 10px;
   }
 
   /* About section mobile */
   .about-nike {
-    padding: 70px 5vw 80px;
+    padding: 60px 16px;
   }
+
   .about-grid-wrapper {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 28px;
   }
+
   .title-nike {
-    font-size: clamp(30px, 8vw, 42px);
+    font-size: clamp(28px, 7.5vw, 38px);
   }
+
   .lead-nike {
-    font-size: 15.5px;
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .about-stats-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
     margin-bottom: 24px;
   }
-  .about-stats-row {
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-  }
+
   .stat-pill {
-    padding: 14px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    text-align: left;
   }
+
   .stat-pill b {
-    font-size: 24px;
+    font-size: 22px;
   }
+
   .stat-pill span {
-    font-size: 11px;
+    font-size: 12px;
+    margin-top: 0;
   }
-  .visual-floating-badge {
-    bottom: 16px;
-    left: 16px;
-    right: 16px;
-    padding: 12px 14px;
+
+  .about-checklist {
     gap: 12px;
   }
-  .badge-h {
-    font-size: 13.5px;
+
+  .visual-card {
+    border-radius: 20px;
   }
+
+  .visual-floating-badge {
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
+  .badge-h {
+    font-size: 13px;
+  }
+
   .badge-p {
-    font-size: 11px;
+    font-size: 10.5px;
   }
 
   /* Services section mobile */
   .svc-interactive {
-    padding: 70px 5vw 80px;
+    padding: 60px 16px;
   }
+
   .svc-header h2 {
-    font-size: clamp(28px, 7.5vw, 38px);
+    font-size: clamp(26px, 7vw, 36px);
   }
+
+  .svc-sub {
+    font-size: 14px;
+  }
+
   .svc-tabs-bar {
-    padding: 6px;
-    gap: 8px;
+    padding: 4px;
+    gap: 6px;
+    -webkit-overflow-scrolling: touch;
   }
+
   .svc-tab-btn {
-    padding: 10px 14px;
-    font-size: 13px;
+    padding: 8px 12px;
+    font-size: 12px;
   }
+
+  .svc-tab-num {
+    font-size: 10.5px;
+    padding: 2px 6px;
+  }
+
   .svc-showcase-grid {
     grid-template-columns: 1fr;
-    padding: 22px;
-    gap: 24px;
-    border-radius: 24px;
+    padding: 18px;
+    gap: 20px;
+    border-radius: 20px;
   }
+
   .svc-img-wrapper {
-    min-height: 220px;
+    min-height: 200px;
+    border-radius: 16px;
   }
+
   .svc-main-title {
-    font-size: 22px;
+    font-size: 20px;
   }
+
+  .svc-main-desc {
+    font-size: 14px;
+  }
+
   .highlights-grid {
     grid-template-columns: 1fr;
     gap: 8px;
   }
+
   .svc-quote-cta {
     width: 100%;
-    height: 50px;
-    font-size: 14px;
+    height: 48px;
+    font-size: 13.5px;
   }
 
   /* Fleet section mobile */
-  .flt-modern {
-    padding: 70px 5vw 80px;
+  .fleet-grid-section {
+    padding: 60px 16px;
   }
-  .flt-header h2 {
-    font-size: clamp(28px, 7.5vw, 38px);
+
+  .flt-header-centered h2 {
+    font-size: clamp(26px, 7vw, 36px);
   }
-  .flt-tabs {
-    padding: 6px;
-    gap: 8px;
+
+  .flt-subtitle {
+    font-size: 14px;
   }
-  .flt-tab {
-    padding: 10px 14px;
+
+  .fleet-cards-3col {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .fleet-card-col {
+    border-radius: 20px;
+  }
+
+  .fleet-card-media {
+    height: 190px;
+  }
+
+  .fleet-card-body {
+    padding: 20px 18px 22px;
+    gap: 14px;
+  }
+
+  .fleet-title-text {
+    font-size: 18px;
+  }
+
+  .fleet-ideal-text {
     font-size: 13px;
   }
-  .flt-card {
-    grid-template-columns: 1fr;
-    padding: 22px;
-    gap: 24px;
-    border-radius: 24px;
-  }
-  .flt-img-box {
-    min-height: 220px;
-  }
-  .flt-specs-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .spec-val {
-    font-size: 15px;
-  }
-  .flt-cta-btn {
-    width: 100%;
-    height: 50px;
+
+  .f-metric-value {
     font-size: 14px;
+  }
+
+  .fleet-book-link {
+    width: 100%;
+    height: 46px;
+    font-size: 13.5px;
   }
 
   /* Marquee mobile */
   .marquee-cinematic {
-    padding: 50px 0 60px;
+    padding: 40px 0;
+    gap: 10px;
+  }
+
+  .marquee-badge-row {
+    gap: 8px;
+  }
+
+  .marquee-pill {
+    padding: 5px 12px;
+    font-size: 11px;
+  }
+
+  .stream-inner {
+    font-size: clamp(28px, 7vw, 44px);
     gap: 14px;
   }
-  .stream-inner {
-    font-size: clamp(32px, 8vw, 54px);
-    gap: 18px;
+
+  /* Testimonials mobile */
+  .testimonials-section {
+    padding: 60px 0;
   }
-  .marquee-pill {
-    padding: 6px 14px;
-    font-size: 11.5px;
+
+  .testi-header {
+    padding: 0 16px;
+    margin-bottom: 28px;
+  }
+
+  .testi-header h2 {
+    font-size: clamp(26px, 7vw, 36px);
+  }
+
+  .testi-sub {
+    font-size: 13.5px;
+  }
+
+  .testi-card {
+    width: 270px;
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .testi-quote-text {
+    font-size: 13.5px;
   }
 
   /* Contact section mobile */
   .ct-upgraded {
-    padding: 70px 5vw 80px;
+    padding: 60px 16px 80px;
   }
+
   .ct-wrapper {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 32px;
   }
+
   .ct-heading {
-    font-size: clamp(30px, 8vw, 42px);
+    font-size: clamp(26px, 7vw, 36px);
   }
-  .ct-form-card {
-    padding: 24px 20px;
-    border-radius: 24px;
+
+  .ct-desc {
+    font-size: 14.5px;
+    margin-bottom: 24px;
   }
-  .form-row-2 {
-    grid-template-columns: 1fr;
+
+  .contact-card-box {
+    padding: 16px 18px;
+    border-radius: 16px;
     gap: 14px;
   }
+
+  .contact-card-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .contact-card-value {
+    font-size: 16px;
+  }
+
+  .ct-form-card {
+    padding: 22px 18px;
+    border-radius: 20px;
+  }
+
+  .form-card-header h3 {
+    font-size: 20px;
+  }
+
+  .form-row-2 {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
   .submit-quote-btn {
-    height: 52px;
+    height: 48px;
     font-size: 14px;
   }
 
   /* Sticky nav mobile */
   .sticky {
-    padding: 6px 10px 6px 14px;
-    gap: 10px;
-    width: calc(100% - 32px);
-    max-width: 380px;
-    justify-content: space-between;
+    padding: 6px 8px 6px 12px;
+    gap: 8px;
+    width: calc(100% - 24px);
+    max-width: 360px;
+    top: 8px;
   }
-  .sticky .l {
-    display: none;
-  }
+
   .sticky-logo-img {
-    height: 26px;
+    height: 24px;
   }
+
   .sticky .q {
-    padding: 8px 14px;
-    font-size: 13px;
+    padding: 7px 12px;
+    font-size: 12px;
   }
 
   /* Floating WhatsApp button mobile */
   .wa {
-    right: 16px;
-    bottom: 16px;
-    height: 46px;
-    padding: 0 18px;
-    font-size: 13.5px;
+    right: 14px;
+    bottom: 14px;
+    height: 44px;
+    padding: 0 16px;
+    font-size: 13px;
   }
-}
 
-@media (max-width: 480px) {
-  .about-stats-row {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-  .stat-pill {
-    display: flex;
+  footer {
+    padding: 24px 16px 30px;
+    font-size: 12.5px;
+    text-align: center;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 12px 18px;
-    text-align: left;
-  }
-  .stat-pill span {
-    margin-top: 0;
+    gap: 8px;
   }
 }
 
