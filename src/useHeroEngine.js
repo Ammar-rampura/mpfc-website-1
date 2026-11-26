@@ -16,21 +16,15 @@ function getInitialTimeMode() {
 }
 
 export default function useHeroEngine() {
-  // Automatically detects current real-world hour
-  const defaultMode = useRef(getInitialTimeMode()).current
-  const [want, setWant] = useState(defaultMode)
-  const [shown, setShown] = useState(defaultMode)
-  const e = useRef({ target: defaultMode, from: defaultMode, start: -1e9, queued: null, swapped: true, animating: false, clock: 0, k: defaultMode, s: 0 })
+  const [want, setWant] = useState(0) // 0: sunset, 1: night
+  const [shown, setShown] = useState(0)
+  const isManual = useRef(false)
+  const e = useRef({ target: 0, from: 0, start: -1e9, queued: null, swapped: true, animating: false, clock: 0, k: 0, s: 0 })
 
   useEffect(() => {
     const root = document.documentElement.style
     const S = e.current
     let id
-
-    // Initialize CSS properties with the real-world time mode
-    root.setProperty('--k', defaultMode.toFixed(3))
-    root.setProperty('--k2', defaultMode.toFixed(3))
-    store.k = defaultMode
 
     // Manual click trigger (smooth transition)
     const begin = (n, now) => { S.target = n; S.from = S.k; S.start = now; S.swapped = false; S.animating = true }
@@ -43,25 +37,21 @@ export default function useHeroEngine() {
       const trackHeight = window.innerHeight * 0.85
 
       if (!S.animating) {
-        // Continuous scroll-driven progress (0.0 to 1.0)
-        const scrollFraction = clamp(scrollY / Math.max(1, trackHeight))
+        // Only drive via scroll if user hasn't explicitly clicked a toggle button
+        if (!isManual.current) {
+          const scrollFraction = clamp(scrollY / Math.max(1, trackHeight))
+          if (Math.abs(scrollFraction - S.k) > 0.005) {
+            S.k = scrollFraction
+            const activeNight = S.k > 0.45 ? 1 : 0
+            if (activeNight !== shown) setShown(activeNight)
+            
+            S.s = Math.sin(S.k * Math.PI) * 0.35
+            setWant(S.k > 0.5 ? 1 : 0)
 
-        // If currently Day (defaultMode === 0): scrolling down goes Day -> Night (0 -> 1)
-        // If currently Night (defaultMode === 1): scrolling down goes Night -> Day (1 -> 0)
-        const scrollK = defaultMode === 0 ? scrollFraction : (1 - scrollFraction)
-
-        if (Math.abs(scrollK - S.k) > 0.005) {
-          S.k = scrollK
-          // Smoothly toggle headlights & photo layer
-          const activeNight = S.k > 0.45 ? 1 : 0
-          if (activeNight !== shown) setShown(activeNight)
-          
-          S.s = Math.sin(S.k * Math.PI) * 0.35
-          setWant(S.k > 0.5 ? 1 : 0)
-
-          store.k = S.k
-          root.setProperty('--k', S.k.toFixed(3))
-          root.setProperty('--k2', S.k.toFixed(3))
+            store.k = S.k
+            root.setProperty('--k', S.k.toFixed(3))
+            root.setProperty('--k2', S.k.toFixed(3))
+          }
         }
       } else {
         const d = now - S.start
@@ -91,9 +81,10 @@ export default function useHeroEngine() {
 
     id = requestAnimationFrame(frame)
     return () => cancelAnimationFrame(id)
-  }, [shown, defaultMode])
+  }, [shown])
 
   const pick = (n) => {
+    isManual.current = true // Lock the user's explicit choice so scroll loop doesn't revert it
     const S = e.current
     if (n === S.target && S.queued === null) return
     setWant(n)

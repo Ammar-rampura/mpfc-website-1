@@ -288,7 +288,10 @@ h1 .y {
   padding-bottom: calc(40*var(--u));
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
+  position: relative;
+  z-index: 20;
+  pointer-events: auto;
 }
 
 .toggle {
@@ -297,13 +300,15 @@ h1 .y {
   grid-template-columns: 1fr 1fr;
   width: calc(524*var(--u));
   height: calc(86*var(--u));
-  padding: calc(2*var(--u));
-  border-radius: calc(16*var(--u));
-  overflow: hidden;
-  background: rgba(120, 132, 140, .34);
-  border: 1px solid rgba(255, 255, 255, .2);
-  -webkit-backdrop-filter: blur(calc(14*var(--u)));
-  backdrop-filter: blur(calc(14*var(--u)))
+  padding: calc(4*var(--u));
+  border-radius: calc(18*var(--u));
+  background: rgba(15, 23, 42, .65);
+  border: 1.5px solid rgba(255, 255, 255, .3);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+  pointer-events: auto;
+  user-select: none;
 }
 
 .toggle button {
@@ -313,9 +318,16 @@ h1 .y {
   align-items: center;
   justify-content: center;
   gap: calc(3*var(--u));
-  border-radius: calc(13*var(--u));
+  border-radius: calc(14*var(--u));
   color: #fff;
-  overflow: hidden
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 2;
+  transition: transform .15s ease;
+}
+
+.toggle button:active {
+  transform: scale(0.97);
 }
 
 .toggle button:before {
@@ -323,31 +335,36 @@ h1 .y {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(160deg, #fbe9c8, #f5b95e 90%);
-  box-shadow: inset 0 0 calc(18*var(--u)) rgba(255, 255, 255, .65);
-  opacity: var(--on)
+  background: linear-gradient(135deg, #ffd08a, #f5b95e 90%);
+  box-shadow: 0 4px 15px rgba(245, 185, 94, .45);
+  opacity: var(--on);
+  transition: opacity .35s ease;
+  z-index: -1;
 }
 
 .toggle b,
 .toggle small {
   position: relative;
-  color: color-mix(in srgb, #2a1b0a calc(var(--on)*100%), #fff)
+  z-index: 2;
+  transition: color .3s ease;
 }
 
 .toggle b {
   font-size: calc(23*var(--u));
-  font-weight: 500;
-  letter-spacing: -.012em
+  font-weight: 700;
+  letter-spacing: -.012em;
+  color: color-mix(in srgb, #201205 calc(var(--on)*100%), #ffffff);
 }
 
 .toggle small {
-  font-size: calc(15*var(--u));
-  opacity: .72
+  font-size: calc(14*var(--u));
+  font-weight: 500;
+  color: color-mix(in srgb, #4a341c calc(var(--on)*100%), rgba(255, 255, 255, .75));
 }
 
 .toggle button:focus-visible {
-  outline: 2px solid #fff;
-  outline-offset: -4px
+  outline: 2px solid #ffd08a;
+  outline-offset: 2px
 }
 
 #bm {
