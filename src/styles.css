@@ -411,14 +411,15 @@ h1 .y {
 
   /* Full Screen Hero with Mobile BG and Desktop Animation Parity */
   .hero-pinned-track {
-    height: 180vh;
+    height: 100svh;
+    min-height: 580px;
     position: relative;
     background: #0b1426;
   }
 
   .hero {
-    position: sticky;
-    top: 0;
+    position: relative;
+    top: auto;
     height: 100svh;
     min-height: 580px;
     display: block;
@@ -474,6 +475,17 @@ h1 .y {
     opacity: 0.65;
   }
 
+  /* Floating clouds on mobile */
+  .clouds {
+    display: block !important;
+    z-index: 2 !important;
+  }
+
+  .cl i {
+    filter: blur(14px) !important;
+    opacity: calc(0.65 + (1 - var(--k)) * 0.28) !important;
+  }
+
   .layer.home {
     position: absolute !important;
     inset: 0 !important;
@@ -515,8 +527,8 @@ h1 .y {
     border-radius: 0 !important;
     transform-origin: 50% 100%;
     transform: translateY(0%) scale(1) !important;
-    -webkit-mask-image: linear-gradient(to bottom, #000 75%, transparent 98%) !important;
-    mask-image: linear-gradient(to bottom, #000 75%, transparent 98%) !important;
+    -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%) !important;
+    mask-image: linear-gradient(to bottom, #000 80%, transparent 100%) !important;
   }
 
   .ph-pic {
@@ -533,17 +545,17 @@ h1 .y {
     display: block !important;
   }
 
-  /* Mobile headlight placement aligned with mobile-bg truck */
+  /* Exact Mobile Headlight Placement on Bumper Lamps */
   .hl-left {
-    left: 34.5% !important;
-    top: 64.1% !important;
-    width: 18% !important;
+    left: 15.4% !important;
+    top: 65.7% !important;
+    width: 16% !important;
   }
 
   .hl-right {
-    left: 51.8% !important;
-    top: 60.4% !important;
-    width: 18% !important;
+    left: 39.8% !important;
+    top: 65.7% !important;
+    width: 16% !important;
   }
 
   .ui {
@@ -750,12 +762,13 @@ h1 .y {
   top: 15%;
 }
 
+/* Clouds Ambient Background */
 .clouds {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 1;
   pointer-events: none;
-  overflow: hidden
+  overflow: hidden;
 }
 
 .cl {
