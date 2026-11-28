@@ -1,5 +1,6 @@
 import logo from '../assets/logo.jpg'
 import truck from '../assets/truck.webp'
+import mobileBg from '../assets/mobile-bg.webp'
 import Fog from './Fog'
 import useHeroEngine from '../useHeroEngine'
 import { waLink, PHONE_DISPLAY, PHONE_TEL } from '../config'
@@ -10,19 +11,33 @@ export default function Hero() {
     <div className="hero-pinned-track" id="top">
       <main className="hero">
         <div className="layer sky">
-          <img className="sk" id="skyM" alt="" src={truck} />
-          <img className="sk" id="skyN" alt="" src={truck} />
+          <picture className="sk-pic">
+            <source media="(max-width: 820px)" srcSet={mobileBg} />
+            <img className="sk" id="skyM" alt="" src={truck} />
+          </picture>
+          <picture className="sk-pic">
+            <source media="(max-width: 820px)" srcSet={mobileBg} />
+            <img className="sk" id="skyN" alt="" src={truck} />
+          </picture>
         </div>
         <div className="layer home">
           <div className={'set' + (shown ? '' : ' is-on')} id="setM">
-            <div className="fg"><img className="ph" alt="An MPFC truck carrying paper rolls on a highway at sunset" src={truck} /></div>
+            <div className="fg">
+              <picture className="ph-pic">
+                <source media="(max-width: 820px)" srcSet={mobileBg} />
+                <img className="ph" alt="An MPFC truck carrying paper rolls on a highway at sunset" src={truck} />
+              </picture>
+            </div>
           </div>
           <div className={'set n' + (shown ? ' is-on' : '')} id="setN">
             <div className="fg">
-              <img className="ph" alt="The MPFC truck on the highway at night" src={truck} />
+              <picture className="ph-pic">
+                <source media="(max-width: 820px)" srcSet={mobileBg} />
+                <img className="ph" alt="The MPFC truck on the highway at night" src={truck} />
+              </picture>
               <i className="tint" />
-              <i className="hl" style={{ left: '38.9%', top: '66.4%' }} />
-              <i className="hl" style={{ left: '19.7%', top: '66.4%' }} />
+              <i className="hl hl-left" />
+              <i className="hl hl-right" />
             </div>
           </div>
         </div>

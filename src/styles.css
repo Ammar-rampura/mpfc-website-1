@@ -158,7 +158,24 @@ button {
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
   mix-blend-mode: screen;
-  background: radial-gradient(#fff6d6 0, rgba(255, 200, 110, .7) 18%, transparent 65%)
+  background: radial-gradient(#fff6d6 0, rgba(255, 200, 110, .7) 18%, transparent 65%);
+}
+
+.hl-left {
+  left: 19.7%;
+  top: 66.4%;
+}
+
+.hl-right {
+  left: 38.9%;
+  top: 66.4%;
+}
+
+.sk-pic,
+.ph-pic {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .tilt {
@@ -392,50 +409,170 @@ h1 .y {
     --u: 1px;
   }
 
-  /* Dedicated App-Style Mobile Hero */
+  /* Full Screen Hero with Mobile BG and Desktop Animation Parity */
   .hero-pinned-track {
-    height: auto !important;
-    min-height: 100svh;
+    height: 180vh;
+    position: relative;
+    background: #0b1426;
   }
 
   .hero {
-    position: relative !important;
-    top: auto !important;
-    height: auto !important;
-    min-height: 100svh;
-    padding-bottom: 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background: #080f1d !important;
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    min-height: 580px;
+    display: block;
+    padding-bottom: 0;
+    background: #080f1d;
+    overflow: hidden;
   }
 
-  /* Disable multi-layer desktop sky effects that cause blur & lag */
-  .layer.sky, #skyM, #skyN, #fog {
-    display: none !important;
-  }
-
-  .ui {
-    position: relative !important;
-    inset: auto !important;
+  /* Mobile sky layer with vertical background */
+  .layer.sky {
+    display: block !important;
+    position: absolute;
+    inset: 0;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex-grow: 1;
-    z-index: 5;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .sk-pic {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .sk {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(12px) !important;
+    transform: scale(1.15);
+  }
+
+  #skyM {
+    opacity: 1;
+  }
+
+  #skyN {
+    opacity: var(--k);
+    filter: blur(12px) brightness(.32) saturate(.6) !important;
+  }
+
+  /* Fog canvas on mobile */
+  #fog {
+    display: block !important;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.65;
+  }
+
+  .layer.home {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    aspect-ratio: auto !important;
+    background: transparent !important;
+    will-change: transform;
+    transform: translate3d(0, var(--sink, 0px), 0) !important;
+  }
+
+  .set {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .6s cubic-bezier(0.16, 1, 0.3, 1);
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  .set.is-on {
+    opacity: 1 !important;
     pointer-events: auto;
   }
 
+  .fg {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    transform-origin: 50% 100%;
+    transform: translateY(0%) scale(1) !important;
+    -webkit-mask-image: linear-gradient(to bottom, #000 75%, transparent 98%) !important;
+    mask-image: linear-gradient(to bottom, #000 75%, transparent 98%) !important;
+  }
+
+  .ph-pic {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .ph {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center bottom !important;
+    display: block !important;
+  }
+
+  /* Mobile headlight placement aligned with mobile-bg truck */
+  .hl-left {
+    left: 34.5% !important;
+    top: 64.1% !important;
+    width: 18% !important;
+  }
+
+  .hl-right {
+    left: 51.8% !important;
+    top: 60.4% !important;
+    width: 18% !important;
+  }
+
+  .ui {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .ui a,
+  .ui button {
+    pointer-events: auto !important;
+  }
+
   .bar {
-    padding: 16px 18px 0 !important;
+    padding: 14px 16px 0 !important;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
   }
 
   .brand-logo-img {
-    height: 38px !important;
+    height: 36px !important;
     border-radius: 8px;
   }
 
@@ -455,16 +592,16 @@ h1 .y {
     box-shadow: 0 4px 14px rgba(185, 28, 28, .4);
   }
 
-  /* Clean Typography Card */
+  /* Responsive Clean Typography */
   h1 {
-    margin: 24px 18px 12px !important;
+    margin: 18px 16px 0 !important;
     text-align: center !important;
-    font-size: clamp(28px, 7.8vw, 36px) !important;
+    font-size: clamp(26px, 7.2vw, 36px) !important;
     font-weight: 800 !important;
-    line-height: 1.12 !important;
+    line-height: 1.14 !important;
     color: #ffffff !important;
     letter-spacing: -.02em !important;
-    text-shadow: none !important;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, .7) !important;
   }
 
   h1 span.l1 {
@@ -483,80 +620,31 @@ h1 .y {
     opacity: 1 !important;
   }
 
-  /* Standalone Focused Mobile Truck Visual */
-  .layer.home {
-    position: relative !important;
-    inset: auto !important;
-    width: calc(100% - 32px) !important;
-    max-width: 440px !important;
-    margin: 14px auto 20px !important;
-    border-radius: 24px !important;
-    overflow: hidden !important;
-    box-shadow: 0 18px 45px rgba(0, 0, 0, .6) !important;
-    border: 1px solid rgba(255, 255, 255, .15) !important;
-    aspect-ratio: 16/10 !important;
-    background: #111a2e;
-    transform: none !important;
-  }
-
-  .set {
-    position: absolute !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .5s ease;
-    display: block !important;
-    visibility: visible !important;
-  }
-
-  .set.is-on {
-    opacity: 1 !important;
-    pointer-events: auto;
-  }
-
-  .fg {
-    position: absolute !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    margin: 0 !important;
-    border-radius: 0 !important;
-    transform: none !important;
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
-  }
-
-  .ph {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-  }
-
   /* Dock & Time-of-Day Switcher */
   .dock {
     margin-top: auto !important;
-    padding: 0 16px 12px !important;
+    padding: 0 16px 20px !important;
     width: 100% !important;
     display: flex;
     flex-direction: column;
     align-items: center;
+    pointer-events: auto;
   }
 
   .toggle {
     width: 100% !important;
-    max-width: 360px !important;
-    height: 62px !important;
-    background: rgba(15, 23, 42, .75) !important;
-    border: 1.5px solid rgba(255, 255, 255, .25) !important;
+    max-width: 350px !important;
+    height: 60px !important;
+    background: rgba(15, 23, 42, .78) !important;
+    border: 1.5px solid rgba(255, 255, 255, .28) !important;
     border-radius: 20px !important;
     padding: 4px !important;
     position: relative !important;
     z-index: 50 !important;
     pointer-events: auto !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, .45) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, .5) !important;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
   }
 
   .toggle button {
@@ -577,12 +665,13 @@ h1 .y {
   }
 
   .cap {
-    font-size: 12.5px !important;
-    color: #94a3b8 !important;
+    font-size: 12px !important;
+    color: rgba(255, 255, 255, .8) !important;
     text-align: center;
-    margin-top: 12px !important;
+    margin-top: 10px !important;
     max-width: 320px !important;
-    line-height: 1.4 !important;
+    line-height: 1.35 !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, .7);
   }
 
   .cap br {
@@ -2217,78 +2306,6 @@ h2 {
   html, body {
     overflow-x: hidden;
     width: 100%;
-  }
-
-  .hero-pinned-track {
-    height: 100svh;
-  }
-
-  .hero {
-    position: relative;
-    top: auto;
-    min-height: 520px;
-    height: 100svh;
-  }
-
-  .fog {
-    display: none;
-  }
-
-  .sk, #skyM, #skyN {
-    filter: none !important;
-  }
-
-  .bar {
-    padding: 14px 16px 0;
-  }
-
-  .brand-logo-img {
-    height: 36px;
-  }
-
-  .links,
-  .side > a:first-child {
-    display: none;
-  }
-
-  .side {
-    gap: 8px;
-  }
-
-  .cta {
-    height: 38px;
-    padding: 0 14px;
-    font-size: 13px;
-  }
-
-  h1 {
-    margin-top: 20px;
-    padding: 0 16px;
-    font-size: clamp(26px, 8vw, 38px);
-    line-height: 1.15;
-  }
-
-  .dock {
-    padding: 0 16px 16px;
-  }
-
-  .toggle {
-    width: 100%;
-    max-width: 340px;
-    height: 64px;
-  }
-
-  .toggle b {
-    font-size: 16px;
-  }
-
-  .toggle small {
-    font-size: 11px;
-  }
-
-  .cap {
-    font-size: 12.5px;
-    padding: 0 10px;
   }
 
   /* About section mobile */
