@@ -272,6 +272,12 @@ button {
   transition: transform .25s
 }
 
+/* Mobile Nav Drawer and Button - strictly hidden on desktop */
+.mobile-menu-btn,
+.mobile-nav-drawer {
+  display: none;
+}
+
 .cta:hover {
   transform: translateY(-1px)
 }
