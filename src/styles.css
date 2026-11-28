@@ -451,8 +451,8 @@ h1 .y {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: blur(12px) !important;
-    transform: scale(1.15);
+    filter: none !important;
+    transform: none !important;
   }
 
   #skyM {
@@ -461,10 +461,10 @@ h1 .y {
 
   #skyN {
     opacity: var(--k);
-    filter: blur(12px) brightness(.32) saturate(.6) !important;
+    filter: brightness(.34) saturate(.65) !important;
   }
 
-  /* Fog canvas on mobile */
+  /* Lightweight Fog canvas on mobile */
   #fog {
     display: block !important;
     position: absolute;
@@ -472,18 +472,20 @@ h1 .y {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    opacity: 0.65;
+    opacity: 0.5;
   }
 
   /* Floating clouds on mobile */
   .clouds {
     display: block !important;
     z-index: 2 !important;
+    pointer-events: none;
   }
 
   .cl i {
-    filter: blur(14px) !important;
-    opacity: calc(0.65 + (1 - var(--k)) * 0.28) !important;
+    filter: blur(10px) !important;
+    opacity: calc(0.6 + (1 - var(--k)) * 0.25) !important;
+    will-change: transform;
   }
 
   .layer.home {
@@ -581,10 +583,12 @@ h1 .y {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    position: relative;
+    z-index: 60;
   }
 
   .brand-logo-img {
-    height: 36px !important;
+    height: 38px !important;
     border-radius: 8px;
   }
 
@@ -593,15 +597,113 @@ h1 .y {
     display: none !important;
   }
 
+  .side {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
   .cta {
-    height: 38px !important;
-    padding: 0 16px !important;
-    font-size: 13px !important;
+    height: 36px !important;
+    padding: 0 14px !important;
+    font-size: 12.5px !important;
     font-weight: 700;
     border-radius: 99px;
     background: #b91c1c !important;
     color: #ffffff !important;
     box-shadow: 0 4px 14px rgba(185, 28, 28, .4);
+  }
+
+  .mobile-menu-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, .85);
+    border: 1px solid rgba(255, 255, 255, .25);
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .4);
+    touch-action: manipulation;
+  }
+
+  /* Mobile Navigation Drawer */
+  .mobile-nav-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(11, 20, 38, .96);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, .15);
+    padding: 76px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 55;
+    pointer-events: auto;
+    transform: translateY(-110%);
+    transition: transform .35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .6);
+  }
+
+  .mobile-nav-drawer.is-open {
+    transform: translateY(0);
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .mobile-nav-links a {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f1f5f9;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mobile-nav-links a:active {
+    color: #ffd08a;
+  }
+
+  .mobile-nav-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .mobile-nav-call,
+  .mobile-nav-quote {
+    height: 44px;
+    border-radius: 99px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 13.5px;
+    font-weight: 700;
+  }
+
+  .mobile-nav-call {
+    background: rgba(255, 255, 255, .1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, .2);
+  }
+
+  .mobile-nav-quote {
+    background: #b91c1c;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(185, 28, 28, .35);
   }
 
   /* Responsive Clean Typography */
@@ -2645,20 +2747,32 @@ h2 {
 
   /* Sticky nav mobile */
   .sticky {
-    padding: 6px 8px 6px 12px;
-    gap: 8px;
+    padding: 6px 12px;
+    gap: 10px;
     width: calc(100% - 24px);
-    max-width: 360px;
-    top: 8px;
+    max-width: 380px;
+    top: 10px;
+    justify-content: space-between;
+  }
+
+  .sticky-links {
+    display: flex;
+    gap: 12px;
+  }
+
+  .sticky .l {
+    font-size: 13px !important;
+    font-weight: 600;
   }
 
   .sticky-logo-img {
-    height: 24px;
+    height: 26px;
   }
 
   .sticky .q {
-    padding: 7px 12px;
-    font-size: 12px;
+    padding: 6px 12px;
+    font-size: 11.5px;
+    white-space: nowrap;
   }
 
   /* Floating WhatsApp button mobile */
@@ -2782,77 +2896,5 @@ h2 {
   .cl i,
   .wa {
     animation: none
-  }
-}
-
-@media (max-width:820px) {
-
-  .ab,
-  .cw {
-    grid-template-columns: 1fr;
-    gap: 26px
-  }
-
-  .aph {
-    aspect-ratio: 4/3;
-    max-height: 36vh
-  }
-
-  .stmt {
-    font-size: 22px;
-    margin: 14px 0 16px
-  }
-
-  .ticks {
-    font-size: 15px
-  }
-
-  .gc {
-    height: 320px
-  }
-
-  .gc b {
-    font-size: 90px
-  }
-
-  .stage {
-    height: 78vh;
-    border-radius: 24px
-  }
-
-  .fc {
-    left: 14px;
-    right: 14px;
-    bottom: 14px;
-    max-width: none;
-    padding: 16px 18px
-  }
-
-  .fi {
-    left: 18px;
-    top: 18px
-  }
-
-  .sticky .l {
-    display: none
-  }
-
-  .sticky {
-    gap: 14px
-  }
-
-  .form {
-    grid-template-columns: 1fr;
-    padding: 22px
-  }
-
-  .ct {
-    padding: 80px 20px 100px
-  }
-
-  .wa {
-    height: 46px;
-    padding: 0 16px;
-    font-size: 14px
   }
 }

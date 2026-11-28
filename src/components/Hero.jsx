@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { Menu, X, Phone, MessageSquare } from 'lucide-react'
 import logo from '../assets/logo.jpg'
 import truck from '../assets/truck.webp'
 import mobileBg from '../assets/mobile-bg.webp'
@@ -7,6 +9,8 @@ import { waLink, PHONE_DISPLAY, PHONE_TEL } from '../config'
 
 export default function Hero() {
   const { want, shown, pick, eng } = useHeroEngine()
+  const [menuOpen, setMenuOpen] = useState(false)
+
   return (
     <div className="hero-pinned-track" id="top">
       <main className="hero">
@@ -49,13 +53,53 @@ export default function Hero() {
               <img src={logo} alt="Madhya Pradesh Freight Carrier Logo" className="brand-logo-img" />
             </a>
             <ul className="links">
-              <li><a href="#top">Home</a></li><li><a href="#about">About</a></li><li><a href="#services">Services</a></li><li><a href="#fleet">Fleet</a></li><li><a href="#contact">Contact</a></li>
+              <li><a href="#top">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#services">Services</a></li>
+              <li><a href="#fleet">Fleet</a></li>
+              <li><a href="#contact">Contact</a></li>
             </ul>
             <div className="side">
               <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a>
               <a className="cta" href={waLink('Hello MPFC, I need a truck quote.')} target="_blank" rel="noopener noreferrer">Get a Quote</a>
+              <button
+                className="mobile-menu-btn"
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Toggle navigation menu"
+                aria-expanded={menuOpen}
+              >
+                {menuOpen ? <X size={22} /> : <Menu size={22} />}
+              </button>
             </div>
           </header>
+
+          {/* Mobile Navigation Drawer */}
+          <div className={'mobile-nav-drawer' + (menuOpen ? ' is-open' : '')}>
+            <div className="mobile-nav-links">
+              <a href="#top" onClick={() => setMenuOpen(false)}>Home</a>
+              <a href="#about" onClick={() => setMenuOpen(false)}>About MPFC</a>
+              <a href="#services" onClick={() => setMenuOpen(false)}>Services</a>
+              <a href="#fleet" onClick={() => setMenuOpen(false)}>Fleet & Commercial Haulers</a>
+              <a href="#contact" onClick={() => setMenuOpen(false)}>Contact & Quote</a>
+            </div>
+            <div className="mobile-nav-actions">
+              <a className="mobile-nav-call" href={`tel:${PHONE_TEL}`}>
+                <Phone size={16} />
+                <span>Call {PHONE_DISPLAY}</span>
+              </a>
+              <a
+                className="mobile-nav-quote"
+                href={waLink('Hello MPFC, I need a truck quote.')}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+              >
+                <MessageSquare size={16} />
+                <span>WhatsApp Quote</span>
+              </a>
+            </div>
+          </div>
+
           <h1>
             <span className="l1">Trucks That Carry Your Business</span>
             <span><i>by Madhya Pradesh</i> <span className="y">Freight Carrier</span></span>
